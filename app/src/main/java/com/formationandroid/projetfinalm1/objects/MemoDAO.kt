@@ -14,7 +14,7 @@ interface MemoDAO {
     fun insertAll(vararg memo: MemoObject)
 
     @Delete
-    fun delete(memo: MemoObject)
+    fun delete(memo: MemoObject?)
 
     @Update
     fun updateMemo(vararg memos: MemoObject)

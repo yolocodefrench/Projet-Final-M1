@@ -1,17 +1,23 @@
 package com.formationandroid.projetfinalm1
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp_transverse_memos.MemoViewHolder
+import com.formationandroid.projetfinalm1.bdd.AppDatabaseHelper
 import com.formationandroid.projetfinalm1.objects.MemoObject
 import java.util.*
 
-class MemoAdapter(listeMemos: MutableList<MemoObject>?) :
+class MemoAdapter(
+    context: Context,
+    listeMemos: MutableList<MemoObject>
+) :
     RecyclerView.Adapter<MemoViewHolder>() {
     // Liste d'objets métier :
     private var listeMemos: MutableList<MemoObject>? = null
+    private var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
         val viewMemo: View =
@@ -44,13 +50,17 @@ class MemoAdapter(listeMemos: MutableList<MemoObject>?) :
         Collections.swap(listeMemos, positionDebut, positionFin)
         notifyItemMoved(positionDebut, positionFin)
         return true
+
     }
 
     // Appelé une fois à la suppression.
     fun onItemDismiss(position: Int) {
         if (position > -1) {
+            val memo = this.listeMemos?.get(position)
             this.listeMemos?.removeAt(position)
             notifyItemRemoved(position)
+            val listeMemos =
+                AppDatabaseHelper.getDatabase(this.context).memosDAO()!!.delete(memo)
         }
     }
 
@@ -59,6 +69,7 @@ class MemoAdapter(listeMemos: MutableList<MemoObject>?) :
      * @param listeMemos Liste de mémos
      */
     init {
+        this.context = context
         this.listeMemos = listeMemos
     }
 }

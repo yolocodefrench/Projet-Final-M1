@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
-import com.formationandroid.projetfinalm1.bdd.AppDatabase
 import com.formationandroid.projetfinalm1.bdd.AppDatabaseHelper
 import com.formationandroid.projetfinalm1.objects.MemoObject
 import kotlinx.android.synthetic.main.include_main.*
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity(), OnItemTouchListener {
         editTextMemo = findViewById(R.id.saisie_memo)
         frameLayoutConteneurDetail = findViewById(R.id.conteneur_detail)
         recyclerView = findViewById(R.id.liste_memos)
-        memosAdapter = MemoAdapter( listeMemos)
+        memosAdapter = MemoAdapter( this, listeMemos)
         recyclerView?.setAdapter(memosAdapter)
         // à ajouter pour de meilleures performances :
         recyclerView?.setHasFixedSize(true)
